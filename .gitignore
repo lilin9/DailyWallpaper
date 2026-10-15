@@ -1,0 +1,89 @@
+# =========================
+# .NET MAUI + C# + XAML
+# =========================
+
+# 构建结果
+**/bin/
+**/obj/
+**/Build/
+**/BundleArtifacts/
+**/AppPackages/
+**/Generated Files/
+
+# 日志文件与日志文件夹（任意层级）
+**/*.log
+**/*.log.*
+**/logs/
+**/Logs/
+**/log/
+**/Log/
+**/*.txt?  # 如果 txt 仅用于日志可保留，否则注释掉
+
+# Visual Studio / Rider / VS Code
+**/.vs/
+**/.vscode/
+**/.idea/
+**/*.user
+**/*.suo
+**/*.userosscache
+**/*.sln.docstates
+**/*.userprefs
+**/*.cache
+**/*.pidb
+**/*.svd
+
+# 编译输出与临时文件
+**/*.dll
+**/*.exe
+**/*.pdb
+**/*.mdb
+**/*.xml?  # 注意：XML 可能是配置文件，谨慎忽略
+**/*.tmp
+**/*.temp
+**/*.bak
+**/*.cache
+**/*.ilk
+**/*.obj
+**/*.o
+**/*.lo
+**/*.la
+**/*.out
+
+# NuGet
+**/packages/
+**/*.nupkg
+**/*.snupkg
+**/project.lock.json
+**/project.assets.json
+
+# 测试与覆盖率
+**/TestResults/
+**/*.coverage
+**/*.coveragexml
+**/*.coveralls
+**/*.trx
+
+# MAUI 平台特定产物
+**/*.apk
+**/*.aab
+**/*.ipa
+**/*.app
+**/*.dSYM
+**/*.keystore
+**/*.jks
+**/*.mobileprovision
+**/*.p12
+**/*.cer
+**/*.pfx
+
+# 系统与编辑器临时文件
+**/.DS_Store
+**/Thumbs.db
+**/Desktop.ini
+**/$RECYCLE.BIN/
+**/*.swp
+**/*.swo
+
+# 用户特定配置
+**/appsettings.Development.json?  # 如果包含敏感信息可取消注释
+**/launchSettings.json?           # 通常保留，按需忽略
