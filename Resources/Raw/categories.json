@@ -1,0 +1,13 @@
+﻿{
+  "defaultCategories": [
+    { "name": "动漫", "keyword": "anime" },
+    { "name": "动物", "keyword": "animals" },
+    { "name": "宇宙", "keyword": "space" },
+    { "name": "星空", "keyword": "starry sky" },
+    { "name": "风景", "keyword": "landscape" },
+    { "name": "AI", "keyword": "ai art" },
+    { "name": "二次元", "keyword": "anime" },
+    { "name": "插画", "keyword": "illustration" },
+    { "name": "赛博朋克", "keyword": "cyberpunk" }
+  ]
+}

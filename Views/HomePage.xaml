@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:DailyWallpaper.ViewModels"
+             x:Class="DailyWallpaper.Views.HomePage"
+             x:DataType="vm:HomeViewModel"
+             Title="主页">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+
+            <!-- 当前壁纸预览 -->
+            <Border HeightRequest="260"
+                    Padding="0"
+                    BackgroundColor="#F5F5F5"
+                    Stroke="#E0E0E0"
+                    StrokeShape="RoundRectangle 12">
+                <Grid>
+                    <Image Source="{Binding WallpaperSource}" Aspect="AspectFill" />
+                    <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                       IsVisible="{Binding IsBusy}"
+                                       Color="#512BD4"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <Label Text="{Binding StatusMessage}"
+                   FontSize="14"
+                   FontAttributes="Bold"
+                   TextColor="#333333" />
+
+            <!-- 立即切换 -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Grid.Column="0"
+                        Text="立即切换"
+                        IsEnabled="{Binding CanInteract}"
+                        Command="{Binding SwitchNowCommand}" />
+                <Button Grid.Column="1"
+                        Text="使用缓存壁纸"
+                        IsEnabled="{Binding CanInteract}"
+                        BackgroundColor="#6E6E6E"
+                        Command="{Binding UseCachedCommand}" />
+            </Grid>
+
+            <Label Text="“立即切换”忽略当前定时设置，立刻执行一次获取 + 设置流程；网络失败时会保持当前壁纸不变。"
+                   FontSize="12"
+                   TextColor="#777777" />
+
+            <!-- 自动切换开关 -->
+            <Border Padding="14"
+                    Stroke="#E0E0E0"
+                    StrokeShape="RoundRectangle 12">
+                <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto">
+                    <Label Grid.Row="0" Grid.Column="0" Text="启用自动切换" FontAttributes="Bold" />
+                    <Switch Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
+                            IsToggled="{Binding IsAutomaticEnabled, Mode=TwoWay}"
+                            VerticalOptions="Center" />
+                    <Label Grid.Row="1" Grid.Column="0"
+                           Text="关闭后不再按时间自动更换，但仍可使用“立即切换”。"
+                           FontSize="12"
+                           TextColor="#777777" />
+                </Grid>
+            </Border>
+
+            <!-- 状态信息 -->
+            <Border Padding="14"
+                    Stroke="#E0E0E0"
+                    StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="状态" FontAttributes="Bold" FontSize="16" />
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="下次切换时间" FontSize="12" TextColor="#888888" />
+                        <Label Text="{Binding NextSwitchText}" FontSize="14" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="上次切换时间" FontSize="12" TextColor="#888888" />
+                        <Label Text="{Binding LastSwitchText}" FontSize="14" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="切换间隔" FontSize="12" TextColor="#888888" />
+                        <Label Text="{Binding IntervalText}" FontSize="14" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="已启用的壁纸类别" FontSize="12" TextColor="#888888" />
+                        <Label Text="{Binding CategoriesText}" FontSize="14" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="当前壁纸" FontSize="12" TextColor="#888888" />
+                        <Label Text="{Binding LastWallpaperText}" FontSize="14" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="图片来源" FontSize="12" TextColor="#888888" />
+                        <Label Text="{Binding SourceUrlText}"
+                               FontSize="12"
+                               LineBreakMode="CharacterWrap" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="运行平台" FontSize="12" TextColor="#888888" />
+                        <Label Text="{Binding PlatformText}" FontSize="14" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="锁屏壁纸" FontSize="12" TextColor="#888888" />
+                        <Label Text="{Binding LockScreenText}" FontSize="13" />
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="后台常驻" FontSize="12" TextColor="#888888" />
+                        <Label Text="{Binding BackgroundText}" FontSize="13" />
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

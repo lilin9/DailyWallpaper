@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:DailyWallpaper.ViewModels"
+             x:Class="DailyWallpaper.Views.PermissionsPage"
+             x:DataType="vm:PermissionsViewModel"
+             Title="权限引导">
+    <Grid Padding="16" RowDefinitions="Auto,*,Auto,Auto,Auto" RowSpacing="10">
+
+        <Label Grid.Row="0"
+               FontSize="12"
+               TextColor="#666666"
+               Text="为了让壁纸在后台按时自动更换，请按顺序完成下面的系统设置（不同系统版本的入口名称可能略有差异）。"
+               IsVisible="{Binding IsSupported}" />
+
+        <Label Grid.Row="0"
+               FontSize="12"
+               TextColor="#666666"
+               Text="{Binding NonAndroidNote}"
+               IsVisible="{Binding IsNotSupported}" />
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Items}" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:PermissionItemViewModel">
+                    <Border Margin="0,4"
+                            Padding="12"
+                            Stroke="#E0E0E0"
+                            StrokeShape="RoundRectangle 10">
+                        <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto" RowSpacing="6">
+                            <Label Grid.Row="0" Grid.Column="0"
+                                   Text="{Binding Title}"
+                                   FontSize="15"
+                                   FontAttributes="Bold" />
+                            <Label Grid.Row="0" Grid.Column="1"
+                                   Text="{Binding StateText}"
+                                   FontSize="12"
+                                   TextColor="#512BD4"
+                                   VerticalOptions="Center" />
+                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
+                                   Text="{Binding Description}"
+                                   FontSize="12"
+                                   TextColor="#777777" />
+                            <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"
+                                    Text="{Binding ActionText}"
+                                    FontSize="13"
+                                    HeightRequest="38"
+                                    Padding="10,0"
+                                    Clicked="OnActionClicked" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Grid.Row="2"
+               Text="{Binding Disclaimer}"
+               FontSize="11"
+               TextColor="#8A6D3B"
+               LineBreakMode="CharacterWrap" />
+
+        <Label Grid.Row="3"
+               Text="{Binding Message}"
+               FontSize="12"
+               TextColor="#2E7D32" />
+
+        <Grid Grid.Row="4" ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button Grid.Column="0" Text="重新检测" Command="{Binding RefreshCommand}" />
+            <Button Grid.Column="1"
+                    Text="我已设置完成"
+                    BackgroundColor="#6E6E6E"
+                    Command="{Binding CompleteCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

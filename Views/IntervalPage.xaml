@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:DailyWallpaper.ViewModels"
+             x:Class="DailyWallpaper.Views.IntervalPage"
+             x:DataType="vm:IntervalViewModel"
+             Title="切换时间">
+    <Grid Padding="16" RowDefinitions="Auto,*,Auto,Auto" RowSpacing="12">
+
+        <Label Grid.Row="0"
+               Text="选择壁纸自动切换的时间间隔。保存后立即生效；应用重启或开机后会按上次切换时间重新计算。"
+               FontSize="12"
+               TextColor="#666666" />
+
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Options}"
+                        SelectedItem="{Binding SelectedOption, Mode=TwoWay}"
+                        SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:IntervalOptionItem">
+                    <Border Margin="0,4"
+                            Padding="12"
+                            Stroke="#E0E0E0"
+                            StrokeShape="RoundRectangle 10">
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <RadioButton Grid.Column="0"
+                                         GroupName="IntervalGroup"
+                                         IsChecked="{Binding IsSelected, Mode=OneWay}"
+                                         InputTransparent="True"
+                                         VerticalOptions="Center" />
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="{Binding DisplayName}" FontSize="16" FontAttributes="Bold" />
+                                <Label Text="{Binding Description}" FontSize="12" TextColor="#777777" />
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <VerticalStackLayout Grid.Row="2" Spacing="6">
+            <Label Text="{Binding NextSwitchText}" FontSize="13" TextColor="#555555" />
+            <Label Text="{Binding Message}" FontSize="13" TextColor="#2E7D32">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding IsError}" Value="True">
+                        <Setter Property="TextColor" Value="#C62828" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+        </VerticalStackLayout>
+
+        <Button Grid.Row="3" Text="保存" Command="{Binding SaveCommand}" />
+    </Grid>
+</ContentPage>

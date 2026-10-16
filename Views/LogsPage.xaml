@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:DailyWallpaper.Models"
+             xmlns:vm="clr-namespace:DailyWallpaper.ViewModels"
+             x:Class="DailyWallpaper.Views.LogsPage"
+             x:DataType="vm:LogsViewModel"
+             Title="日志">
+    <Grid Padding="16" RowDefinitions="Auto,Auto,*,Auto,Auto" RowSpacing="10">
+
+        <Grid Grid.Row="0" ColumnDefinitions="Auto,*" ColumnSpacing="10">
+            <Label Grid.Column="0" Text="筛选" VerticalOptions="Center" FontSize="13" />
+            <Picker Grid.Column="1"
+                    ItemsSource="{Binding FilterOptions}"
+                    SelectedItem="{Binding SelectedFilter, Mode=TwoWay}" />
+        </Grid>
+
+        <Label Grid.Row="1" Text="{Binding SummaryText}" FontSize="12" TextColor="#666666" />
+
+        <CollectionView Grid.Row="2" ItemsSource="{Binding Entries}" SelectionMode="None">
+            <CollectionView.EmptyView>
+                <Label Text="暂无日志。完成一次切换后这里会显示结果。"
+                       FontSize="13"
+                       TextColor="#888888"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:WallpaperLogEntry">
+                    <Border Margin="0,3"
+                            Padding="10"
+                            Stroke="#E5E5E5"
+                            StrokeShape="RoundRectangle 8">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="{Binding Display}" FontSize="12" LineBreakMode="WordWrap" />
+                            <Label Text="{Binding Detail}"
+                                   FontSize="11"
+                                   TextColor="#888888"
+                                   LineBreakMode="WordWrap" />
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <Label Grid.Row="3"
+               Text="{Binding LogFilePath, StringFormat='日志文件：{0}'}"
+               FontSize="11"
+               TextColor="#888888"
+               LineBreakMode="CharacterWrap" />
+
+        <Grid Grid.Row="4" ColumnDefinitions="*,*" ColumnSpacing="10">
+            <Button Grid.Column="0" Text="刷新" Command="{Binding RefreshCommand}" />
+            <Button Grid.Column="1"
+                    Text="清空日志"
+                    BackgroundColor="#C62828"
+                    Command="{Binding ClearCommand}" />
+        </Grid>
+    </Grid>
+</ContentPage>

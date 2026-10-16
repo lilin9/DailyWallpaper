@@ -1,14 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+﻿<?xml version="1.0" encoding="UTF-8" ?>
 <Shell
     x:Class="DailyWallpaper.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:DailyWallpaper"
-    Title="DailyWallpaper">
+    Title="DailyWallpaper"
+    Shell.FlyoutBehavior="Disabled">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <!--
+        页面实例在 AppShell.xaml.cs 中通过依赖注入赋值，
+        这样页面与 ViewModel 都能使用构造函数注入。
+    -->
+    <TabBar>
+        <ShellContent x:Name="HomeTab" Title="主页" Route="home" />
+        <ShellContent x:Name="CategoriesTab" Title="类别" Route="categories" />
+        <ShellContent x:Name="IntervalTab" Title="切换时间" Route="interval" />
+        <ShellContent x:Name="LogsTab" Title="日志" Route="logs" />
+        <ShellContent x:Name="SettingsTab" Title="设置" Route="settings" />
+    </TabBar>
 
 </Shell>

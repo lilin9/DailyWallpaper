@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:DailyWallpaper.ViewModels"
+             x:Class="DailyWallpaper.Views.SettingsPage"
+             x:DataType="vm:SettingsViewModel"
+             Title="设置">
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="14">
+
+            <!-- 开机自启 -->
+            <Border Padding="14" Stroke="#E0E0E0" StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="8">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="开机自启" FontAttributes="Bold" VerticalOptions="Center" />
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding RunAtStartup, Mode=TwoWay}"
+                                IsEnabled="{Binding IsStartupSupported}"
+                                VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text="{Binding StartupDescription}"
+                           FontSize="11"
+                           TextColor="#888888"
+                           LineBreakMode="CharacterWrap" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- 后台常驻 / 托盘 -->
+            <Border Padding="14" Stroke="#E0E0E0" StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="后台常驻" FontAttributes="Bold" />
+                    <Label Text="{Binding BackgroundDescription}"
+                           FontSize="11"
+                           TextColor="#888888"
+                           LineBreakMode="CharacterWrap" />
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsWindows}">
+                        <Label Grid.Column="0"
+                               Text="关闭主窗口时最小化到托盘"
+                               FontSize="13"
+                               VerticalOptions="Center" />
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding MinimizeToTrayOnClose, Mode=TwoWay}"
+                                VerticalOptions="Center" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- 壁纸设置 -->
+            <Border Padding="14" Stroke="#E0E0E0" StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="壁纸" FontAttributes="Bold" />
+                    <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding IsLockScreenSupported}">
+                        <Label Grid.Column="0"
+                               Text="同时设置锁屏壁纸"
+                               FontSize="13"
+                               VerticalOptions="Center" />
+                        <Switch Grid.Column="1"
+                                IsToggled="{Binding SetLockScreen, Mode=TwoWay}"
+                                VerticalOptions="Center" />
+                    </Grid>
+                    <Label Text="本地缓存张数（用于去重与断网备选）" FontSize="13" />
+                    <Slider Minimum="1"
+                            Maximum="20"
+                            Value="{Binding CacheSize, Mode=TwoWay}" />
+                    <Label Text="{Binding CacheSizeText}" FontSize="11" TextColor="#888888" />
+                    <Button Text="权限引导"
+                            IsVisible="{Binding IsPermissionGuideVisible}"
+                            Command="{Binding OpenPermissionsCommand}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- 文件与日志 -->
+            <Border Padding="14" Stroke="#E0E0E0" StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="文件与日志" FontAttributes="Bold" />
+                    <Label Text="{Binding SettingsFilePath, StringFormat='设置文件：{0}'}"
+                           FontSize="11"
+                           TextColor="#888888"
+                           LineBreakMode="CharacterWrap" />
+                    <Label Text="{Binding CategoriesFilePath, StringFormat='类别配置：{0}'}"
+                           FontSize="11"
+                           TextColor="#888888"
+                           LineBreakMode="CharacterWrap" />
+                    <Label Text="{Binding LogFilePath, StringFormat='日志文件：{0}'}"
+                           FontSize="11"
+                           TextColor="#888888"
+                           LineBreakMode="CharacterWrap" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Button Grid.Column="0" Text="打开数据目录" FontSize="13" Command="{Binding OpenDataFolderCommand}" />
+                        <Button Grid.Column="1"
+                                Text="复制设置路径"
+                                FontSize="13"
+                                BackgroundColor="#6E6E6E"
+                                Command="{Binding CopyPathCommand}"
+                                CommandParameter="{Binding SettingsFilePath}" />
+                    </Grid>
+                    <Button Text="清空日志" FontSize="13" BackgroundColor="#C62828" Command="{Binding ClearLogsCommand}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- 关于 -->
+            <Border Padding="14" Stroke="#E0E0E0" StrokeShape="RoundRectangle 12">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="关于" FontAttributes="Bold" />
+                    <Label Text="{Binding VersionText}" FontSize="12" TextColor="#555555" />
+                    <Label Text="{Binding PlatformName, StringFormat='平台实现：{0}'}" FontSize="12" TextColor="#555555" />
+                    <Label Text="{Binding DeviceDescription}" FontSize="12" TextColor="#555555" />
+                    <Label Text="{Binding AboutText}"
+                           FontSize="11"
+                           TextColor="#888888"
+                           LineBreakMode="WordWrap" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="{Binding Message}" FontSize="13" TextColor="#2E7D32">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding IsError}" Value="True">
+                        <Setter Property="TextColor" Value="#C62828" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+
+            <Button Text="退出应用"
+                    BackgroundColor="#C62828"
+                    Command="{Binding ExitAppCommand}" />
+
+            <Label Text="Windows：点击“退出应用”会停止后台定时任务并关闭窗口。Android：会停止前台服务并结束进程（系统仍可能因省电策略自动重启它）。"
+                   FontSize="11"
+                   TextColor="#888888"
+                   LineBreakMode="WordWrap" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
